@@ -23,6 +23,12 @@ jobs:
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
 
+      - name: Install dependencies
+        run: |
+          forge install foundry-rs/forge-std --no-commit
+          forge install smartcontractkit/chainlink-brownie-contracts --no-commit
+          forge install Cyfrin/foundry-devops --no-commit
+
       - name: Show Forge version
         run: |
           forge --version
