@@ -8,8 +8,8 @@ import {FundMe} from "../../src/FundMe.sol";
 
 /**
  * @title FundMeTest
-// Based on PatrickAlphaC’s FundMeTest.sol
-// Modified by SecondYearLearner
+ * // Based on PatrickAlphaC’s FundMeTest.sol
+ * // Modified by SecondYearLearner
  * @notice Unit tests for the FundMe contract covering funding and withdrawal logic
  * @dev Uses Forge stdlib and Chainlink mocks to simulate price feeds and edge cases
  */
@@ -21,12 +21,12 @@ contract FundMeTest is Test {
 
     /// @notice Test addresses: owner and user
     address OWNER = makeAddr("owner");
-    address USER  = makeAddr("user");
+    address USER = makeAddr("user");
 
     /// @notice Values for funding and balances
-    uint256 private constant SEND_VALUE       = 0.1 ether;
+    uint256 private constant SEND_VALUE = 0.1 ether;
     uint256 private constant STARTING_BALANCE = 10 ether;
-    uint256 private constant GAS_PRICE        = 1;
+    uint256 private constant GAS_PRICE = 1;
 
     /**
      * @notice Deploy two FundMe contracts with different mock feeds and seed balances
@@ -34,9 +34,9 @@ contract FundMeTest is Test {
      */
     function setUp() public {
         MockETHLINKAggregator mock18 = new MockETHLINKAggregator(2000 * 10 ** 18);
-        MockV3Aggregator    mock8  = new MockV3Aggregator(8, 2000 * 10**8);
+        MockV3Aggregator mock8 = new MockV3Aggregator(8, 2000 * 10 ** 8);
 
-        fundMe  = new FundMe(address(mock18));
+        fundMe = new FundMe(address(mock18));
         fundMe2 = new FundMe(address(mock8));
 
         vm.deal(USER, STARTING_BALANCE);

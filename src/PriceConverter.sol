@@ -12,8 +12,8 @@ library PriceConverter {
     /// @return price The ETH/USD price with 18 decimals
     function getPrice(AggregatorV3Interface priceFeed) internal view returns (uint256 price) {
         // This calls the Chainlink oracle to get the latest price data
-        (, int256 answer, , , ) = priceFeed.latestRoundData();
-        
+        (, int256 answer,,,) = priceFeed.latestRoundData();
+
         // Chainlink gives 8 decimals but we need 18, so multiply by 10^10
         return uint256(answer) * 1e10;
     }
@@ -22,12 +22,13 @@ library PriceConverter {
     /// @param ethAmount How much ETH to convert (in wei)
     /// @param priceFeed Which Chainlink feed to usea
     /// @return ethAmountInUsd The USD value in 18 decimal format
-    function getConversionRate(
-        uint256 ethAmount,
-        AggregatorV3Interface priceFeed
-    ) internal view returns (uint256 ethAmountInUsd) {
+    function getConversionRate(uint256 ethAmount, AggregatorV3Interface priceFeed)
+        internal
+        view
+        returns (uint256 ethAmountInUsd)
+    {
         uint256 ethPrice = getPrice(priceFeed);
-        
+
         // Need to divide by 1e18 because both values are in 18 decimals
         // and multiplying them would give 36 decimals
         return (ethPrice * ethAmount) / 1e18;

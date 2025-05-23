@@ -21,8 +21,8 @@ contract FundFundMe is Script {
     function fundFundMe(address mostRecentlyDeployed, address sender) public {
         console.log("Current network chainid:", block.chainid); // Log the current network chain ID
         console.log("Contract address:", mostRecentlyDeployed); // Log the address of the FundMe contract
-        
-        vm.startBroadcast(sender);  // Start broadcasting as the sender
+
+        vm.startBroadcast(sender); // Start broadcasting as the sender
         FundMe(payable(mostRecentlyDeployed)).fund{value: SEND_VALUE}(); // Fund the contract
         vm.stopBroadcast(); // Stop broadcasting
         console.log("Funded FundMe with %s", SEND_VALUE); // Log the funded amount
@@ -34,10 +34,10 @@ contract FundFundMe is Script {
      */
     function run() external {
         address mostRecentlyDeployed = DevOpsTools.get_most_recent_deployment(
-            "FundMe", 
+            "FundMe",
             block.chainid // Get the address of the most recently deployed FundMe contract
         );
-        fundFundMe(mostRecentlyDeployed, msg.sender);  // Call fundFundMe with the sender's address
+        fundFundMe(mostRecentlyDeployed, msg.sender); // Call fundFundMe with the sender's address
     }
 }
 
@@ -64,7 +64,7 @@ contract WithdrawFundMe is Script {
      */
     function run() external {
         address mostRecentlyDeployed = DevOpsTools.get_most_recent_deployment(
-            "FundMe", 
+            "FundMe",
             block.chainid // Get the address of the most recently deployed FundMe contract
         );
         withdrawFundMe(mostRecentlyDeployed, msg.sender); // Call withdrawFundMe with the sender's address

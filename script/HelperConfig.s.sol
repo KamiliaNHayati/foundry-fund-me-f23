@@ -26,11 +26,14 @@ contract HelperConfigScript is Script {
      * @dev It checks which network is being used and sets the price feed accordingly
      */
     constructor() {
-        if (block.chainid == 11155111) { // Check for Sepolia network
+        if (block.chainid == 11155111) {
+            // Check for Sepolia network
             activeNetworkConfig = getSepoliaEthConfig(); // Set config for Sepolia
-        } else if (block.chainid == 1) { // Check for Mainnet
+        } else if (block.chainid == 1) {
+            // Check for Mainnet
             activeNetworkConfig = getMainnetEthConfig(); // Set config for Mainnet
-        } else if (block.chainid == 31337) { // Check for Hardhat local network
+        } else if (block.chainid == 31337) {
+            // Check for Hardhat local network
             activeNetworkConfig = getOrCreateAnvilEthConfig(); // Set or create config for Anvil
         } else {
             revert("Unsupported network"); // Revert if the network is not supported
@@ -53,7 +56,7 @@ contract HelperConfigScript is Script {
      * @notice Gets the ETH/USD price feed configuration for the Mainnet
      * @return mainnetConfig The network configuration for Mainnet
      */
-    function getMainnetEthConfig() public view returns(NetworkConfig memory) {
+    function getMainnetEthConfig() public view returns (NetworkConfig memory) {
         NetworkConfig memory mainnetConfig = NetworkConfig({
             priceFeed: 0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419, // Mainnet price feed address
             blockConfirmations: block.number // Current block number as confirmation
@@ -73,7 +76,7 @@ contract HelperConfigScript is Script {
         // Deploying a new mock price feed for testing
         vm.startBroadcast(); // Start broadcasting the transaction
         MockV3Aggregator mockPriceFeed = new MockV3Aggregator(
-            DECIMALS, 
+            DECIMALS,
             INITIAL_PRICE // Deploy a new mock price feed with initial price
         );
         vm.stopBroadcast(); // Stop broadcasting the transaction

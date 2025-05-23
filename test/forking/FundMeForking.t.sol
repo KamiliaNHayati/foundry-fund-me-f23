@@ -106,11 +106,7 @@ contract FundMeForkingTest is Test {
 
         // Assert
         assertEq(address(fundMe).balance, 0); // Check that the contract balance is now zero
-        assertEq(
-            actualOwner.balance,
-            ownerStart + contractStart,
-            "Owner balance should include all contract funds"
-        ); // Check the owner's balance
+        assertEq(actualOwner.balance, ownerStart + contractStart, "Owner balance should include all contract funds"); // Check the owner's balance
     }
 
     /**

@@ -20,11 +20,11 @@ contract FundMeScript is Script {
      * @return blockNumber The block number where the contract was deployed
      * @return deployer The address of the deployer
      */
-    function run() external returns (FundMe, uint, address) {
+    function run() external returns (FundMe, uint256, address) {
         // Create an instance of the helper config script
         HelperConfigScript helperConfig = new HelperConfigScript();
         // Get the ETH/USD price feed address and the current block number
-        (address ethUsdPriceFeed, uint blockNumber) = helperConfig.activeNetworkConfig();
+        (address ethUsdPriceFeed, uint256 blockNumber) = helperConfig.activeNetworkConfig();
 
         // Start broadcasting the transaction
         vm.startBroadcast();
@@ -35,6 +35,6 @@ contract FundMeScript is Script {
         // Stop broadcasting the transaction
         vm.stopBroadcast();
         // Return the deployed contract, block number, and deployer address
-        return (fundMe, blockNumber, DEPLOYER_USER);        
+        return (fundMe, blockNumber, DEPLOYER_USER);
     }
 }
