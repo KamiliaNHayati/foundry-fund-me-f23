@@ -25,9 +25,10 @@ jobs:
 
       - name: Install dependencies
         run: |
-          forge install foundry-rs/forge-std --no-commit
-          forge install smartcontractkit/chainlink-brownie-contracts --no-commit
-          forge install Cyfrin/foundry-devops --no-commit
+          forge install foundry-rs/forge-std --no-git
+          # If you also need chainlink and devops libraries:
+          forge install smartcontractkit/chainlink-brownie-contracts --no-git
+          forge install Cyfrin/foundry-devops --no-git
 
       - name: Show Forge version
         run: |
@@ -45,5 +46,5 @@ jobs:
 
       - name: Run Forge tests
         run: |
-          forge test -vvv
+          forge test -vvv --fi
         id: test

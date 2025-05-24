@@ -11,33 +11,35 @@ import {DevOpsTools} from "foundry-devops/src/DevOpsTools.sol";
  * @dev It uses the Foundry testing framework to interact with the FundMe contract
  */
 contract FundFundMe is Script {
-    uint256 constant SEND_VALUE = 0.01 ether; // Amount to fund the contract with
+    uint256 fundingAmount; // Amount to fund the contract with
 
     /**
      * @notice Funds the FundMe contract with a specified amount
      * @param mostRecentlyDeployed The address of the deployed FundMe contract
      * @param sender The address that will be used to fund the contract
+     * @param amountToFund The amount of ETH to send for funding
      */
-    function fundFundMe(address mostRecentlyDeployed, address sender) public {
-        console.log("Current network chainid:", block.chainid); // Log the current network chain ID
-        console.log("Contract address:", mostRecentlyDeployed); // Log the address of the FundMe contract
+    function fundFundMe(address mostRecentlyDeployed, address sender, uint256 amountToFund) public { // Added amountToFund parameter
+        console.log("Current network chainid:", block.chainid);
+        console.log("Contract address:", mostRecentlyDeployed);
 
-        vm.startBroadcast(sender); // Start broadcasting as the sender
-        FundMe(payable(mostRecentlyDeployed)).fund{value: SEND_VALUE}(); // Fund the contract
-        vm.stopBroadcast(); // Stop broadcasting
-        console.log("Funded FundMe with %s", SEND_VALUE); // Log the funded amount
+        vm.startBroadcast(sender);
+        FundMe(payable(mostRecentlyDeployed)).fund{value: amountToFund}(); // Use amountToFund parameter
+        vm.stopBroadcast();
+        console.log("Funded FundMe with %s", amountToFund); // Log amountToFund
     }
 
     /**
      * @notice Runs the funding process
      * @dev This function gets the most recently deployed FundMe contract and calls fundFundMe
      */
-    function run() external {
+    function run(uint256 amount) external { // Changed type to uint256 for consistency
         address mostRecentlyDeployed = DevOpsTools.get_most_recent_deployment(
             "FundMe",
-            block.chainid // Get the address of the most recently deployed FundMe contract
+            block.chainid
         );
-        fundFundMe(mostRecentlyDeployed, msg.sender); // Call fundFundMe with the sender's address
+        // Now call the modified fundFundMe function, passing the amount
+        fundFundMe(mostRecentlyDeployed, msg.sender, amount);
     }
 }
 

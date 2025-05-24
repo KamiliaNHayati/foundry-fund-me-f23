@@ -27,7 +27,7 @@ contract FundMeScript is Script {
         (address ethUsdPriceFeed, uint256 blockNumber) = helperConfig.activeNetworkConfig();
 
         // Start broadcasting the transaction
-        vm.startBroadcast();
+        vm.startBroadcast(DEPLOYER_USER);
         // Deploy the FundMe contract with the price feed address
         FundMe fundMe = new FundMe(ethUsdPriceFeed);
         // Save the deployed contract's address

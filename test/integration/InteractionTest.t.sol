@@ -30,7 +30,7 @@ contract InteractionTest is Test {
     function setUp() external {
         // Deploy the FundMe contract using the deployment script
         fundMeScript = new FundMeScript();
-        (fundMe,, actualDeployer) = fundMeScript.run(); // Get the deployed contract and deployer address
+        (fundMe, ,actualDeployer) = fundMeScript.run(); // Get the deployed contract and deployer address
 
         // Give our test user some ETH to work with
         vm.deal(USER, STARTING_BALANCE);
@@ -43,7 +43,7 @@ contract InteractionTest is Test {
     function testUserCanFundInteractions() public {
         // Create and run the funding script
         FundFundMe fundFundMe = new FundFundMe();
-        fundFundMe.fundFundMe(address(fundMe), USER); // User funds the contract
+        fundFundMe.fundFundMe(address(fundMe), USER, SEND_VALUE); // User funds the contract
 
         // Check if the user was added to the funders array
         address funder = fundMe.getFunder(0); // Get the first funder
