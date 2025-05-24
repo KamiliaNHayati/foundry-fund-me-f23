@@ -49,20 +49,20 @@ contract ZkSyncDevOps is Test, ZkSyncChainChecker, FoundryZkSyncChecker {
      *      2. Ensure ZkSync-Foundry is set up (`foundryup-zksync`).
      *      3. Run: `forge test --mt testZkSyncFoundryFails --zksync` (this test might fail or behave unexpectedly).
      */
-    function testZkSyncFoundryFails() public onlyVanillaFoundry {
+    // function testZkSyncFoundryFails() public onlyVanillaFoundry {
         // Commented out due to issues in CI
         // bool keyWasFound = vm.keyExistsJson('{"hi": "true"}', ".hi");
         // assert(keyWasFound); // Expecting to find the key "hi".
-    }
+    // }
 
     /**
      * @notice This also tests `vm.keyExistsJson`, but specifically for Foundry set up for ZkSync.
      * @dev The `onlyFoundryZkSync` part means: "Only run this if using the ZkSync version of Foundry."
      *      This ensures that normal Foundry features (like this FFI one) still work with ZkSync tools.
      */
-    function testZkSyncFoundryFails2() public onlyFoundryZkSync {
+    // function testZkSyncFoundryFails2() public onlyFoundryZkSync {
         // Commented out due to issues in CI
         // bool keyWasFound = vm.keyExistsJson('{"hi": "true"}', ".hi");
         // assert(keyWasFound); // Expecting to find "hi".
-    }
+    // }
 }
