@@ -19,7 +19,8 @@ contract FundFundMe is Script {
      * @param sender The address that will be used to fund the contract
      * @param amountToFund The amount of ETH to send for funding
      */
-    function fundFundMe(address mostRecentlyDeployed, address sender, uint256 amountToFund) public { // Added amountToFund parameter
+    function fundFundMe(address mostRecentlyDeployed, address sender, uint256 amountToFund) public {
+        // Added amountToFund parameter
         console.log("Current network chainid:", block.chainid);
         console.log("Contract address:", mostRecentlyDeployed);
 
@@ -33,11 +34,9 @@ contract FundFundMe is Script {
      * @notice Runs the funding process
      * @dev This function gets the most recently deployed FundMe contract and calls fundFundMe
      */
-    function run(uint256 amount) external { // Changed type to uint256 for consistency
-        address mostRecentlyDeployed = DevOpsTools.get_most_recent_deployment(
-            "FundMe",
-            block.chainid
-        );
+    function run(uint256 amount) external {
+        // Changed type to uint256 for consistency
+        address mostRecentlyDeployed = DevOpsTools.get_most_recent_deployment("FundMe", block.chainid);
         // Now call the modified fundFundMe function, passing the amount
         fundFundMe(mostRecentlyDeployed, msg.sender, amount);
     }

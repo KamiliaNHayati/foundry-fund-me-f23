@@ -30,7 +30,7 @@ contract InteractionTest is Test {
     function setUp() external {
         // Deploy the FundMe contract using the deployment script
         fundMeScript = new FundMeScript();
-        (fundMe, ,actualDeployer) = fundMeScript.run(); // Get the deployed contract and deployer address
+        (fundMe,, actualDeployer) = fundMeScript.run(); // Get the deployed contract and deployer address
 
         // Give our test user some ETH to work with
         vm.deal(USER, STARTING_BALANCE);
