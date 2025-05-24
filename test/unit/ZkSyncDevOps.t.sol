@@ -50,9 +50,8 @@ contract ZkSyncDevOps is Test, ZkSyncChainChecker, FoundryZkSyncChecker {
      *      3. Run: `forge test --mt testZkSyncFoundryFails --zksync` (this test might fail or behave unexpectedly).
      */
     function testZkSyncFoundryFails() public onlyVanillaFoundry {
-        // Commented out due to issues in CI
-        // bool keyWasFound = vm.keyExistsJson('{"hi": "true"}', ".hi");
-        // assert(keyWasFound); // Expecting to find the key "hi".
+        bool keyWasFound = vm.keyExistsJson('{"hi": "true"}', ".hi");
+        assert(keyWasFound); // Expecting to find the key "hi".
     }
 
     /**
@@ -61,8 +60,7 @@ contract ZkSyncDevOps is Test, ZkSyncChainChecker, FoundryZkSyncChecker {
      *      This ensures that normal Foundry features (like this FFI one) still work with ZkSync tools.
      */
     function testZkSyncFoundryFails2() public onlyFoundryZkSync {
-        // Commented out due to issues in CI
-        // bool keyWasFound = vm.keyExistsJson('{"hi": "true"}', ".hi");
-        // assert(keyWasFound); // Expecting to find "hi".
+        bool keyWasFound = vm.keyExistsJson('{"hi": "true"}', ".hi");
+        assert(keyWasFound); // Expecting to find "hi".
     }
 }
