@@ -7,21 +7,21 @@ import {FundMeScript} from "../../script/FundMe.s.sol";
 
 /**
  * @title FundMeForkingTest
- * @notice This is a test contract for the FundMe contract using a forked network
- * @dev I modified this from the original to learn how forking works
+ * @notice This contract tests the FundMe contract using a forked network.
+ * @dev This version is modified to help understand how forking works in Foundry.
  */
 contract FundMeForkingTest is Test {
-    FundMe public fundMe; // This is the FundMe contract we're testing
-    address public actualOwner; // The owner of the contract
-    uint256 public deploymentBlock; // Block number when the contract was deployed
+    FundMe public fundMe; // The FundMe contract being tested
+    address public actualOwner; // The owner of the FundMe contract
+    uint256 public deploymentBlock; // The block number when the contract was deployed
 
-    address USER = makeAddr("user"); // Test user address
+    address USER = makeAddr("user"); // A test user address
     uint256 private constant SEND_VALUE = 0.1 ether; // Amount to send for funding
     uint256 private constant STARTING_BALANCE = 10 ether; // Starting balance for the user
 
     /**
-     * @notice Set up the test environment
-     * @dev This runs before each test to deploy the contract and set balances
+     * @notice Set up the test environment.
+     * @dev This function runs before each test to deploy the FundMe contract and set balances.
      */
     function setUp() public {
         // Deploy the FundMe contract using the script
@@ -34,21 +34,21 @@ contract FundMeForkingTest is Test {
         vm.deal(USER, STARTING_BALANCE); // Give the user some starting balance
     }
 
-    /// @notice Accept ETH in test contract
+    /// @notice Accept ETH in the test contract
     receive() external payable {}
     fallback() external payable {}
 
     /**
-     * @notice Check that the price feed version is correct
-     * @dev The live Chainlink ETH/USD feed should have version = 4
+     * @notice Check that the price feed version is correct.
+     * @dev The live Chainlink ETH/USD feed should have version = 4.
      */
     function testPriceFeedVersionIsAccurate() public view {
         assertEq(fundMe.getVersion(), 4); // Assert that the version is correct
     }
 
     /**
-     * @notice Test that funding with zero ETH fails
-     * @dev We expect a revert when trying to fund with no ETH
+     * @notice Test that funding with zero ETH fails.
+     * @dev This test expects a revert when trying to fund with no ETH.
      */
     function testFundFailsWithoutEnoughETH() public {
         vm.expectRevert(); // Expect a revert
@@ -56,8 +56,8 @@ contract FundMeForkingTest is Test {
     }
 
     /**
-     * @notice Test that the funded amount is recorded correctly
-     * @dev This uses a real oracle to convert ETH to USD
+     * @notice Test that the funded amount is recorded correctly.
+     * @dev This test uses a real oracle to convert ETH to USD.
      */
     function testFundUpdatesFundedDataStructure() public {
         vm.prank(USER); // Pretend to be the user
@@ -68,7 +68,7 @@ contract FundMeForkingTest is Test {
     }
 
     /**
-     * @notice Test that the funder is added to the list upon funding
+     * @notice Test that the funder is added to the list upon funding.
      */
     function testAddsFunderToArray() public {
         vm.prank(USER); // Pretend to be the user
@@ -78,8 +78,8 @@ contract FundMeForkingTest is Test {
     }
 
     /**
-     * @notice Test that only the owner can withdraw funds
-     * @dev Non-owner calls should revert
+     * @notice Test that only the owner can withdraw funds.
+     * @dev Non-owner calls should revert.
      */
     function testOnlyOwnerCanWithdraw() public {
         vm.prank(USER); // Pretend to be the user
@@ -88,8 +88,8 @@ contract FundMeForkingTest is Test {
     }
 
     /**
-     * @notice Test that the owner can withdraw funds when only they have funded
-     * @dev Verifies balances before and after withdrawal
+     * @notice Test that the owner can withdraw funds when only they have funded.
+     * @dev This verifies balances before and after withdrawal.
      */
     function testWithdrawWithASingleFunder() public {
         // Arrange
@@ -110,7 +110,7 @@ contract FundMeForkingTest is Test {
     }
 
     /**
-     * @notice Test withdrawal when multiple funders have contributed
+     * @notice Test withdrawal when multiple funders have contributed.
      */
     function testWithdrawFromMultipleFunders() public {
         // Arrange: multiple funders
@@ -131,7 +131,7 @@ contract FundMeForkingTest is Test {
     }
 
     /**
-     * @notice Test that the gas-optimized withdraw behaves the same as the standard withdraw
+     * @notice Test that the gas-optimized withdraw behaves the same as the standard withdraw.
      */
     function testCheaperWithdrawBehavior() public {
         // Arrange
@@ -152,8 +152,8 @@ contract FundMeForkingTest is Test {
     }
 
     /**
-     * @notice Log deployment details for manual inspection
-     * @dev This is a view-only helper, not an assertion test
+     * @notice Log deployment details for manual inspection.
+     * @dev This is a view-only helper, not an assertion test.
      */
     function testLogDeploymentDetails() public view {
         console.log("FundMe at:", address(fundMe)); // Log the contract address

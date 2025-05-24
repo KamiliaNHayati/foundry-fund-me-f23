@@ -8,15 +8,15 @@ import {FundFundMe, WithdrawFundMe} from "../../script/Interactions.s.sol";
 
 /**
  * @title InteractionTest
- * @notice This is a test contract for interacting with the FundMe contract
- * @dev I modified this to learn how to test interactions through scripts
+ * @notice This contract tests how users can interact with the FundMe contract.
+ * @dev This version is modified to help understand how to test interactions through scripts.
  */
 contract InteractionTest is Test {
-    FundMe fundMe; // This is the FundMe contract we're testing
-    FundMeScript fundMeScript; // This is the script used to deploy FundMe
+    FundMe fundMe; // The FundMe contract being tested
+    FundMeScript fundMeScript; // The script used to deploy the FundMe contract
 
     // Test user and value constants
-    address USER = makeAddr("user"); // Test user address
+    address USER = makeAddr("user"); // A test user address
     uint256 constant SEND_VALUE = 0.1 ether; // Amount to send for funding
     uint256 constant STARTING_BALANCE = 10 ether; // Starting balance for the user
 
@@ -24,21 +24,21 @@ contract InteractionTest is Test {
     address actualDeployer;
 
     /**
-     * @notice Set up the test environment before each test
-     * @dev This runs before each test to deploy the contract and set balances
+     * @notice Set up the test environment before each test.
+     * @dev This function runs before each test to deploy the FundMe contract and set balances.
      */
     function setUp() external {
         // Deploy the FundMe contract using the deployment script
         fundMeScript = new FundMeScript();
         (fundMe,, actualDeployer) = fundMeScript.run(); // Get the deployed contract and deployer address
 
-        // Give our test user some ETH to work with
+        // Give the test user some ETH to work with
         vm.deal(USER, STARTING_BALANCE);
     }
 
     /**
-     * @notice Test that users can fund the contract using the FundFundMe script
-     * @dev This checks if the user is added to the funders array correctly
+     * @notice Test that users can fund the contract using the FundFundMe script.
+     * @dev This checks if the user is added to the funders array correctly.
      */
     function testUserCanFundInteractions() public {
         // Create and run the funding script
@@ -55,8 +55,8 @@ contract InteractionTest is Test {
     }
 
     /**
-     * @notice Test that only the contract owner can withdraw funds
-     * @dev This checks if the withdrawal function works correctly
+     * @notice Test that only the contract owner can withdraw funds.
+     * @dev This checks if the withdrawal function works correctly.
      */
     function testOnlyOwnerCanWithdraw() public {
         // First, fund the contract so there's something to withdraw
@@ -82,11 +82,11 @@ contract InteractionTest is Test {
     }
 
     /**
-     * @notice Verify the initial state of the contract
-     * @dev This checks the owner address and other initial states
+     * @notice Verify the initial state of the contract.
+     * @dev This checks the owner address and other initial states.
      */
     function testInitialState() public view {
         assertEq(fundMe.getOwner(), actualDeployer); // Check if the owner is correct
-            // You can add more checks here to verify other initial states
+            // Additional checks can be added here to verify other initial states
     }
 }
